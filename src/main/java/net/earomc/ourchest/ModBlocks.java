@@ -1,5 +1,6 @@
 package net.earomc.ourchest;
 
+import net.earomc.ourchest.ourchest.OurChestBlock;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -18,7 +19,7 @@ public class ModBlocks {
 
     public static void initialize() {}
 
-    public static final Block OUR_CHEST = register("our_chest", Block::new,
+    public static final Block OUR_CHEST = register("our_chest", OurChestBlock::new,
             Properties.of()
                     .lightLevel(blockState -> 15)
                     .mapColor(MapColor.COLOR_RED)

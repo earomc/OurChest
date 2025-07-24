@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class ModBlockEntityTypes {
 
-    public static final BlockEntityType<OurChestBlockEntity> OUR_CHEST = register("our_chest", OurChestBlockEntity::new, ModBlocks.OUR_CHEST);
+    public static final BlockEntityType<OurChestBlockEntity> OUR_CHEST = register("our_chest_entity", OurChestBlockEntity::new, ModBlocks.OUR_CHEST);
 
     public static void initialize() {}
 

@@ -4,8 +4,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.earomc.ourchest.ModBlocks;
-import net.earomc.ourchest.ourchest.OurChestMod;
 import net.earomc.ourchest.ourchest.OurChestBlockEntity;
+import net.earomc.ourchest.ourchest.OurChestMod;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ChestModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -18,13 +20,13 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractChestBlock;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.DoubleBlockCombiner;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
+@Environment(EnvType.CLIENT)
 public class OurChestBlockEntityRenderer implements BlockEntityRenderer<OurChestBlockEntity> {
 
     private final ChestModel singleModel;
@@ -39,12 +41,10 @@ public class OurChestBlockEntityRenderer implements BlockEntityRenderer<OurChest
 
     @Override
     public void render(OurChestBlockEntity blockEntity, float f, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, Vec3 vec3) {
-        OurChestMod.LOGGER.info("Rendering stuff!");
         Level level = blockEntity.getLevel();
         boolean inLevel = level != null;
         BlockState blockState = inLevel ? blockEntity.getBlockState() : ModBlocks.OUR_CHEST.defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH);
         if (blockState.getBlock() instanceof AbstractChestBlock<?> abstractChestBlock) {
-            OurChestMod.LOGGER.info("Is abstract chest!");
             poseStack.pushPose();
             float g = blockState.getValue(ChestBlock.FACING).toYRot();
             poseStack.translate(0.5F, 0.5F, 0.5F);
