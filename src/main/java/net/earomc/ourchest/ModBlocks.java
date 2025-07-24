@@ -40,7 +40,8 @@ public class ModBlocks {
             // can be the same.
             ResourceKey<Item> itemKey = keyOfItem(name);
 
-            BlockItem blockItem = new BlockItem(block, new Item.Properties());
+            BlockItem blockItem = new BlockItem(block, new Item.Properties().useBlockDescriptionPrefix()
+                    .setId(itemKey));
             Registry.register(BuiltInRegistries.ITEM, itemKey, blockItem);
         }
         return Registry.register(BuiltInRegistries.BLOCK, blockKey, block);
