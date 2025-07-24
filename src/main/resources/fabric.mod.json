@@ -17,7 +17,7 @@
       "net.earomc.ourchest.client.OurChestClient"
     ],
     "main": [
-      "net.earomc.ourchest.ourchest.OurChest"
+      "net.earomc.ourchest.ourchest.OurChestMod"
     ]
   },
   "mixins": [

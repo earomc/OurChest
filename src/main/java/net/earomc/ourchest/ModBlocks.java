@@ -1,12 +1,9 @@
 package net.earomc.ourchest;
 
-import net.earomc.ourchest.ourchest.OurChest;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.flag.FeatureFlag;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -15,7 +12,7 @@ import net.minecraft.world.level.material.MapColor;
 
 import java.util.function.Function;
 
-import static net.earomc.ourchest.ourchest.OurChest.resourceLocation;
+import static net.earomc.ourchest.ourchest.OurChestMod.resourceLocation;
 
 public class ModBlocks {
 
