@@ -40,38 +40,29 @@ public class OurChestBlockEntityRenderer implements BlockEntityRenderer<OurChest
     }
 
     @Override
-    public void render(OurChestBlockEntity blockEntity, float f, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, Vec3 vec3) {
+    public void render(OurChestBlockEntity blockEntity, float tickProgress, PoseStack poseStack, MultiBufferSource multiBufferSource, int light, int overlay, Vec3 cameraPos) {
         Level level = blockEntity.getLevel();
         boolean inLevel = level != null;
         BlockState blockState = inLevel ? blockEntity.getBlockState() : ModBlocks.OUR_CHEST.defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH);
-        if (blockState.getBlock() instanceof AbstractChestBlock<?> abstractChestBlock) {
-            poseStack.pushPose();
-            float g = blockState.getValue(ChestBlock.FACING).toYRot();
-            poseStack.translate(0.5F, 0.5F, 0.5F);
-            poseStack.mulPose(Axis.YP.rotationDegrees(-g));
-            poseStack.translate(-0.5F, -0.5F, -0.5F);
-            DoubleBlockCombiner.NeighborCombineResult<? extends ChestBlockEntity> neighborCombineResult;
-            if (inLevel) {
-                neighborCombineResult = abstractChestBlock.combine(blockState, level, blockEntity.getBlockPos(), true);
-            } else {
-                neighborCombineResult = DoubleBlockCombiner.Combiner::acceptNone;
-            }
-
-            float openness = neighborCombineResult.apply(ChestBlock.opennessCombiner(blockEntity)).get(f);
-            openness = 1.0F - openness;
-            openness = 1.0F - openness * openness * openness; // 1 - o³
-            int k = neighborCombineResult.apply(new BrightnessCombiner<>()).applyAsInt(i);
-            Material material = getMaterial();
-            VertexConsumer vertexConsumer = material.buffer(multiBufferSource, RenderType::entityCutout);
-            this.render(poseStack, vertexConsumer, this.singleModel, openness, k, j);
+        poseStack.pushPose();
+        float g = blockState.getValue(ChestBlock.FACING).toYRot();
+        poseStack.translate(0.5F, 0.5F, 0.5F);
+        poseStack.mulPose(Axis.YP.rotationDegrees(-g));
+        poseStack.translate(-0.5F, -0.5F, -0.5F);
 
 
-            poseStack.popPose();
-        }
+        float openness = blockEntity.getOpenNess(tickProgress);
+        openness = 1.0F - openness;
+        openness = 1.0F - openness * openness * openness; // 1 - (1 - openness)³
+        Material material = getMaterial();
+        VertexConsumer vertexConsumer = material.buffer(multiBufferSource, RenderType::entityCutout);
+        this.render(poseStack, vertexConsumer, this.singleModel, openness, light, overlay);
+
+        poseStack.popPose();
     }
 
-    private void render(PoseStack poseStack, VertexConsumer vertexConsumer, ChestModel chestModel, float openness, int k, int j) {
+    private void render(PoseStack poseStack, VertexConsumer vertexConsumer, ChestModel chestModel, float openness, int light, int overlay) {
         chestModel.setupAnim(openness);
-        chestModel.renderToBuffer(poseStack, vertexConsumer, k, j);
+        chestModel.renderToBuffer(poseStack, vertexConsumer, light, overlay);
     }
 }
